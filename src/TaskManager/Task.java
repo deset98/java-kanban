@@ -28,10 +28,6 @@ public class Task {
         return status;
     }
 
-    public String getTitle() {
-        return title + " - " + description;
-    }
-
 
     @Override
     public boolean equals(Object o) {

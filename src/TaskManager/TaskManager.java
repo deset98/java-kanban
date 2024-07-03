@@ -1,6 +1,7 @@
 package TaskManager;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 public class TaskManager {
@@ -107,54 +108,25 @@ public class TaskManager {
     }
 
 
-    public void updateTask(Task task) {                // Привет! Если по ТЗ нужно ID присваивать через TaskManager,
-        int oldTaskId = 0;                             // то это делается в add-методе. Следовательно, если передать в
-        for (Task oldTask : tasksMap.values()) {       // update() объект Task, который еще не был в add(), то у его ID
-            if (oldTask.equals(task)) {                // будет установлено значение по-умолчанию taskId = 0;
-                removeTaskById(oldTask.getTaskId());   // Решил что можно через equals() найти старую задачу в мапе,
-                oldTaskId = oldTask.getTaskId();       // удалить ее и далее присвоить новой задаче ID от старой.
-                break;                                 // Либо можно через TaskManager присвоить другой ID (отличный от старого).
-            }                                          // И уже по этому присвоенному ID добавить в мапу.
-        }                                              // Только работает все это пока поля title и description равны в
-                                                       // и в новой и в старой задаче...
-        task.setTaskId(oldTaskId);
+    public void updateTask(Task task) {
         tasksMap.put(task.getTaskId(), task);
     }
 
     public void updateEpic(Epic epic) {
 
-        int oldEpicId = 0;
-        ArrayList<Subtask> subtasks = epic.getEpicSubtasks();
-        for (Epic oldEpic : epicsMap.values()) {
-            if (oldEpic.equals(epic)) {
-                subtasks = oldEpic.getEpicSubtasks();
-                epicsMap.remove(oldEpic.getTaskId());
-                oldEpicId = oldEpic.getTaskId();
-                break;
-            }
-        }
+        Epic oldEpic = epicsMap.get(epic.getTaskId());
+        epic.setEpicSubtasks(oldEpic.getEpicSubtasks());
 
-        epic.setTaskId(oldEpicId);
-        epic.setEpicSubtasks(subtasks);
         epicsMap.put(epic.getTaskId(), epic);
         epic.setEpicStatus(calculateEpicStatus(epic.getTaskId()));
     }
 
     public void updateSubtask(Subtask subtask) {
 
-        int oldSubtaskId = 0;
-        for (Task oldSubtask : subtasksMap.values()) {
-            if (oldSubtask.equals(subtask)) {
-                removeSubtaskById(oldSubtask.getTaskId());
-                oldSubtaskId = oldSubtask.getTaskId();
-                break;
-            }
-        }
-
-        subtask.setTaskId(oldSubtaskId);
         subtasksMap.put(subtask.getTaskId(), subtask);
 
         Epic epic = epicsMap.get(subtask.getEpicId());
+        epic.getEpicSubtasks().add(subtask);
         epic.setEpicStatus(calculateEpicStatus(subtask.getEpicId()));
     }
 
@@ -168,36 +140,28 @@ public class TaskManager {
             return StatusOfTask.NEW;
         }
 
-        boolean statusNew = false;
+        boolean epicStatusNew = false;
+        boolean containsNotNewTasks = false;
         for (Subtask epicSubtask : epicSubtasks) {
-            StatusOfTask status = epicSubtask.getStatus();
-            if (status == StatusOfTask.NEW) {
-                statusNew = true;
-            } else {
-                statusNew = false;
-                break;
+            StatusOfTask statusOfSubtask = epicSubtask.getStatus();
+
+            if (statusOfSubtask == StatusOfTask.IN_PROGRESS) {
+                return StatusOfTask.IN_PROGRESS;
             }
+
+            if (!containsNotNewTasks && statusOfSubtask == StatusOfTask.NEW) {
+                epicStatusNew = true;
+            } else if (!containsNotNewTasks) {
+                epicStatusNew = false;
+                containsNotNewTasks = true;
+            }
+
         }
 
-        if (statusNew) {
+        if (epicStatusNew) {
             return StatusOfTask.NEW;
         }
 
-        boolean statusDone = false;
-        for (Subtask epicSubtask : epicSubtasks) {
-            StatusOfTask status = epicSubtask.getStatus();
-            if (status == StatusOfTask.DONE) {
-                statusDone = true;
-            } else {
-                statusDone = false;
-                break;
-            }
-        }
-
-        if (statusDone) {
-            return StatusOfTask.DONE;
-        }
-
-        return StatusOfTask.IN_PROGRESS;
+        return StatusOfTask.DONE;
     }
 }
