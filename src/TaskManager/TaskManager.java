@@ -140,25 +140,23 @@ public class TaskManager {
             return StatusOfTask.NEW;
         }
 
-        boolean epicStatusNew = false;
-        boolean containsNotNewTasks = false;
+        boolean containsNew = false;
+        boolean containsDone = false;
         for (Subtask epicSubtask : epicSubtasks) {
             StatusOfTask statusOfSubtask = epicSubtask.getStatus();
 
-            if (statusOfSubtask == StatusOfTask.IN_PROGRESS) {
+            if (statusOfSubtask == StatusOfTask.NEW) {
+                containsNew = true;
+            } else if (statusOfSubtask == StatusOfTask.DONE) {
+                containsDone = true;
+            } else if (statusOfSubtask == StatusOfTask.IN_PROGRESS) {
+                return StatusOfTask.IN_PROGRESS;
+            } else if (containsNew && containsDone) {
                 return StatusOfTask.IN_PROGRESS;
             }
-
-            if (!containsNotNewTasks && statusOfSubtask == StatusOfTask.NEW) {
-                epicStatusNew = true;
-            } else if (!containsNotNewTasks) {
-                epicStatusNew = false;
-                containsNotNewTasks = true;
-            }
-
         }
 
-        if (epicStatusNew) {
+        if (containsNew) {
             return StatusOfTask.NEW;
         }
 
