@@ -1,7 +1,6 @@
 package TaskManager;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 
 public class TaskManager {
@@ -150,6 +149,10 @@ public class TaskManager {
             } else if (statusOfSubtask == StatusOfTask.DONE) {
                 containsDone = true;
             } else if (statusOfSubtask == StatusOfTask.IN_PROGRESS) {
+                return StatusOfTask.IN_PROGRESS;
+            }
+
+            if (containsNew && containsDone) {
                 return StatusOfTask.IN_PROGRESS;
             }
         }
