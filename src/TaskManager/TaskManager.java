@@ -151,15 +151,12 @@ public class TaskManager {
                 containsDone = true;
             } else if (statusOfSubtask == StatusOfTask.IN_PROGRESS) {
                 return StatusOfTask.IN_PROGRESS;
-            } else if (containsNew && containsDone) {
-                return StatusOfTask.IN_PROGRESS;
             }
         }
 
         if (containsNew) {
             return StatusOfTask.NEW;
         }
-
         return StatusOfTask.DONE;
     }
 }
