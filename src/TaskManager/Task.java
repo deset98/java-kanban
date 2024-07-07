@@ -4,9 +4,9 @@ import java.util.Objects;
 
 public class Task {
 
-    private int taskId;
-    private String title;
-    private String description;
+    protected int taskId;
+    protected String title;
+    protected String description;
     protected StatusOfTask status;
 
 
@@ -28,6 +28,14 @@ public class Task {
         return status;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -41,5 +49,15 @@ public class Task {
     @Override
     public int hashCode() {
         return Objects.hash(title, description);
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "taskId=" + taskId +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                '}';
     }
 }
