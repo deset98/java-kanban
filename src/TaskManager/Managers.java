@@ -3,10 +3,10 @@ package TaskManager;
 public class Managers {
 
     public static TaskManager getDefaultTaskManager() {
-        return  new InMemoryTaskManager();
+        return new InMemoryTaskManager();
     }
 
     public static HistoryManager getDefaultHistoryManager() {
-        return  new InMemoryHistoryManager();
+        return new InMemoryHistoryManager();
     }
 }

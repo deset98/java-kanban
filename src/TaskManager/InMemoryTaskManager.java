@@ -16,12 +16,12 @@ public class InMemoryTaskManager implements TaskManager {
 
 
     public InMemoryTaskManager() {
-            this.tasksMap = new HashMap<>();
-            this.subtasksMap = new HashMap<>();
-            this.epicsMap = new HashMap<>();
+        this.tasksMap = new HashMap<>();
+        this.subtasksMap = new HashMap<>();
+        this.epicsMap = new HashMap<>();
 
-            this.history = Managers.getDefaultHistoryManager();
-        }
+        this.history = Managers.getDefaultHistoryManager();
+    }
 
 
     @Override

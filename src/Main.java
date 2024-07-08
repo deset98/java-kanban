@@ -33,7 +33,7 @@ public class Main {
         manager.getSubtaskById(8);
 
         printAllTasks(manager);
-}
+    }
 
     private static void printAllTasks(TaskManager manager) {
         System.out.println("Задачи:");
