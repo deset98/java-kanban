@@ -1,10 +1,10 @@
-package TaskManager;
+package taskManager;
 
 import java.util.Objects;
 
 public class Task {
 
-    protected int taskId;
+    private int taskId;
     protected String title;
     protected String description;
     protected StatusOfTask status;
@@ -35,7 +35,6 @@ public class Task {
     public String getDescription() {
         return description;
     }
-
 
     @Override
     public boolean equals(Object o) {
