@@ -50,4 +50,3 @@ public interface TaskManager {
 
     public List<Task> getHistory();
 }
-
