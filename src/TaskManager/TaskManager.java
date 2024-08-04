@@ -1,4 +1,4 @@
-package TaskManager;
+package taskmanager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,4 +50,3 @@ public interface TaskManager {
 
     public List<Task> getHistory();
 }
-
