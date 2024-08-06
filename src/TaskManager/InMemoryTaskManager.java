@@ -1,4 +1,4 @@
-package TaskManager;
+package taskmanager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -76,6 +76,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void removeTaskById(int id) {
         tasksMap.remove(id);
+        history.remove(id);
     }
 
     @Override
@@ -86,6 +87,7 @@ public class InMemoryTaskManager implements TaskManager {
         ArrayList<Subtask> subtasks = epic.getEpicSubtasks();
         subtasks.remove(subtask);
         epic.setEpicStatus(calculateEpicStatus(subtask.getEpicId()));
+        history.remove(id);
     }
 
     @Override
@@ -94,14 +96,20 @@ public class InMemoryTaskManager implements TaskManager {
         ArrayList<Subtask> subtasks = epic.getEpicSubtasks();
         for (Subtask subtask : subtasks) {
             subtasksMap.remove(subtask.getTaskId());
+            history.remove(subtask.getTaskId());
         }
         epicsMap.remove(id);
+        history.remove(id);
     }
 
 
     @Override
     public void clearTasks() {
+        for (Task task : tasksMap.values()) {
+            history.remove(task.getTaskId());
+        }
         tasksMap.clear();
+
     }
 
     @Override
@@ -119,13 +127,23 @@ public class InMemoryTaskManager implements TaskManager {
             subtasks.clear();
             epic.setEpicStatus(calculateEpicStatus(epic.getTaskId()));
         }
-        subtasksMap.clear();
 
+        for (Subtask subtask : subtasksMap.values()) {
+            history.remove(subtask.getTaskId());
+        }
+        subtasksMap.clear();
     }
 
     @Override
     public void clearEpics() {
+        for (Epic epic : epicsMap.values()) {
+            history.remove(epic.getTaskId());
+        }
         epicsMap.clear();
+
+        for (Subtask subtask : subtasksMap.values()) {
+            history.remove(subtask.getTaskId());
+        }
         subtasksMap.clear();
     }
 
@@ -162,6 +180,37 @@ public class InMemoryTaskManager implements TaskManager {
         epic.setEpicStatus(calculateEpicStatus(subtask.getEpicId()));
     }
 
+    public List<Task> getHistory() {
+        return history.getHistory();
+    }
+
+    @Override
+    public ArrayList<Task> getTasks() {
+        return new ArrayList<Task>(tasksMap.values());
+    }
+
+    @Override
+    public ArrayList<Subtask> getSubtasks() {
+        return new ArrayList<Subtask>(subtasksMap.values());
+    }
+
+    @Override
+    public ArrayList<Epic> getEpics() {
+        return new ArrayList<Epic>(epicsMap.values());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        InMemoryTaskManager that = (InMemoryTaskManager) o;
+        return nextTaskId == that.nextTaskId && Objects.equals(tasksMap, that.tasksMap) && Objects.equals(subtasksMap, that.subtasksMap) && Objects.equals(epicsMap, that.epicsMap);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nextTaskId, tasksMap, subtasksMap, epicsMap);
+    }
 
     private StatusOfTask calculateEpicStatus(int epicId) {
 
@@ -194,37 +243,5 @@ public class InMemoryTaskManager implements TaskManager {
             return StatusOfTask.NEW;
         }
         return StatusOfTask.DONE;
-    }
-
-    public List<Task> getHistory() {
-        return history.getHistory();
-    }
-
-    @Override
-    public ArrayList<Task> getTasks() {
-        return new ArrayList<Task>(tasksMap.values());
-    }
-
-    @Override
-    public ArrayList<Subtask> getSubtasks() {
-        return new ArrayList<Subtask>(subtasksMap.values());
-    }
-
-    @Override
-    public ArrayList<Epic> getEpics() {
-        return new ArrayList<Epic>(epicsMap.values());
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        InMemoryTaskManager that = (InMemoryTaskManager) o;
-        return nextTaskId == that.nextTaskId && Objects.equals(tasksMap, that.tasksMap) && Objects.equals(subtasksMap, that.subtasksMap) && Objects.equals(epicsMap, that.epicsMap);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(nextTaskId, tasksMap, subtasksMap, epicsMap);
     }
 }
