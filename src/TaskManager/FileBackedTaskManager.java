@@ -128,7 +128,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 history.add(fromString(line));
             }
         } catch (IOException e) {
-
+            System.out.println("Ошибка чтения файла...");
         }
     }
 }
