@@ -8,11 +8,11 @@ import java.util.Objects;
 public class InMemoryTaskManager implements TaskManager {
     private int nextTaskId = 1;
 
-    private final HashMap<Integer, Task> tasksMap;
-    private final HashMap<Integer, Subtask> subtasksMap;
-    private final HashMap<Integer, Epic> epicsMap;
+    protected final HashMap<Integer, Task> tasksMap;
+    protected final HashMap<Integer, Subtask> subtasksMap;
+    protected final HashMap<Integer, Epic> epicsMap;
 
-    private final HistoryManager history;
+    protected final HistoryManager history;
 
 
     public InMemoryTaskManager() {
@@ -53,7 +53,6 @@ public class InMemoryTaskManager implements TaskManager {
         epic.setEpicStatus(calculateEpicStatus(subtask.getEpicId()));
 
     }
-
 
     @Override
     public Task getTaskById(int id) {
