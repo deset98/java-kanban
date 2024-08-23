@@ -37,10 +37,6 @@ public class Task {
         return description;
     }
 
- /*   public Task fromString(String string) {
-        // создать задачу из строки
-    }*/
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

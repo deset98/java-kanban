@@ -33,8 +33,6 @@ public interface TaskManager {
 
     public void clearEpics();
 
-    public ArrayList<Subtask> getEpicSubtasks(int id);
-
 
     public void updateTask(Task task);
 
@@ -42,11 +40,16 @@ public interface TaskManager {
 
     public void updateSubtask(Subtask subtask);
 
+
     public ArrayList<Task> getTasks();
 
     public ArrayList<Subtask> getSubtasks();
 
     public ArrayList<Epic> getEpics();
+
+    public ArrayList<Subtask> getEpicSubtasks(int id);
+
+    public List<Task> getAllTasks();
 
     public List<Task> getHistory();
 }

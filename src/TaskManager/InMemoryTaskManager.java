@@ -148,13 +148,6 @@ public class InMemoryTaskManager implements TaskManager {
 
 
     @Override
-    public ArrayList<Subtask> getEpicSubtasks(int id) {
-        Epic epic = epicsMap.get(id);
-        return epic.getEpicSubtasks();
-    }
-
-
-    @Override
     public void updateTask(Task task) {
         tasksMap.put(task.getTaskId(), task);
     }
@@ -179,6 +172,7 @@ public class InMemoryTaskManager implements TaskManager {
         epic.setEpicStatus(calculateEpicStatus(subtask.getEpicId()));
     }
 
+
     public List<Task> getHistory() {
         return history.getHistory();
     }
@@ -197,6 +191,22 @@ public class InMemoryTaskManager implements TaskManager {
     public ArrayList<Epic> getEpics() {
         return new ArrayList<Epic>(epicsMap.values());
     }
+
+    @Override
+    public ArrayList<Subtask> getEpicSubtasks(int id) {
+        Epic epic = epicsMap.get(id);
+        return epic.getEpicSubtasks();
+    }
+
+    @Override
+    public List<Task> getAllTasks() {
+        List<Task> allTasks = new ArrayList<>();
+        allTasks.addAll(tasksMap.values());
+        allTasks.addAll(epicsMap.values());
+        allTasks.addAll(subtasksMap.values());
+        return allTasks;
+    }
+
 
     @Override
     public boolean equals(Object o) {
