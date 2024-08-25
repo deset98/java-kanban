@@ -8,11 +8,11 @@ import java.util.Objects;
 public class InMemoryTaskManager implements TaskManager {
     private int nextTaskId = 1;
 
-    private final HashMap<Integer, Task> tasksMap;
-    private final HashMap<Integer, Subtask> subtasksMap;
-    private final HashMap<Integer, Epic> epicsMap;
+    protected final HashMap<Integer, Task> tasksMap;
+    protected final HashMap<Integer, Subtask> subtasksMap;
+    protected final HashMap<Integer, Epic> epicsMap;
 
-    private final HistoryManager history;
+    protected final HistoryManager history;
 
 
     public InMemoryTaskManager() {
@@ -53,7 +53,6 @@ public class InMemoryTaskManager implements TaskManager {
         epic.setEpicStatus(calculateEpicStatus(subtask.getEpicId()));
 
     }
-
 
     @Override
     public Task getTaskById(int id) {
@@ -149,13 +148,6 @@ public class InMemoryTaskManager implements TaskManager {
 
 
     @Override
-    public ArrayList<Subtask> getEpicSubtasks(int id) {
-        Epic epic = epicsMap.get(id);
-        return epic.getEpicSubtasks();
-    }
-
-
-    @Override
     public void updateTask(Task task) {
         tasksMap.put(task.getTaskId(), task);
     }
@@ -180,6 +172,7 @@ public class InMemoryTaskManager implements TaskManager {
         epic.setEpicStatus(calculateEpicStatus(subtask.getEpicId()));
     }
 
+
     public List<Task> getHistory() {
         return history.getHistory();
     }
@@ -198,6 +191,22 @@ public class InMemoryTaskManager implements TaskManager {
     public ArrayList<Epic> getEpics() {
         return new ArrayList<Epic>(epicsMap.values());
     }
+
+    @Override
+    public ArrayList<Subtask> getEpicSubtasks(int id) {
+        Epic epic = epicsMap.get(id);
+        return epic.getEpicSubtasks();
+    }
+
+    @Override
+    public List<Task> getAllTasks() {
+        List<Task> allTasks = new ArrayList<>();
+        allTasks.addAll(tasksMap.values());
+        allTasks.addAll(epicsMap.values());
+        allTasks.addAll(subtasksMap.values());
+        return allTasks;
+    }
+
 
     @Override
     public boolean equals(Object o) {

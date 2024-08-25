@@ -4,10 +4,11 @@ import java.util.Objects;
 
 public class Task {
 
-    private int taskId;
+    protected int taskId;
     protected String title;
     protected String description;
     protected StatusOfTask status;
+    private final TypeOfTask type = TypeOfTask.TASK;
 
 
     public Task(String title, String description, StatusOfTask status) {
@@ -52,11 +53,6 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task{" +
-                "taskId=" + taskId +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", status=" + status +
-                '}';
+        return taskId + "," + type + "," + title + "," + status + "," + description;
     }
 }
