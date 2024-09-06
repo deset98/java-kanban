@@ -1,7 +1,10 @@
-package taskmanager;
+package model;
+
+import model.enums.*;
+
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class EpicTest {
 

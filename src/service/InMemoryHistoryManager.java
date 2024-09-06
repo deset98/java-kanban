@@ -1,4 +1,8 @@
-package taskmanager;
+package service;
+
+import model.*;
+import service.interfaces.HistoryManager;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +26,6 @@ public class InMemoryHistoryManager implements HistoryManager {
 
             remove(task.getTaskId());
         }
-
         linkLast(task);
     }
 
@@ -55,13 +58,21 @@ public class InMemoryHistoryManager implements HistoryManager {
         Node prevNode = node.prev;
         Node nextNode = node.next;
 
-        if (!node.equals(head) && !node.equals(tail)) { // удаление из середины
-            prevNode.next = nextNode;
-            nextNode.prev = prevNode;
-        } else if (node.equals(head)) { // удаление head, случай с tail, обработан в add(T task)
-            nextNode.prev = null;
+        if (prevNode == null) {
             head = nextNode;
+        } else {
+            prevNode.next = nextNode;
+            node.prev = null;
         }
+
+        if (nextNode == null) {
+            tail = prevNode;
+        } else {
+            nextNode.prev = prevNode;
+            node.next = null;
+        }
+
+        node.data = null;
     }
 
     private void setLastNodeAsHeadAndTail() {
@@ -88,7 +99,7 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     private static class Node {
 
-        private final Task data;
+        private Task data;
         private Node next;
         private Node prev;
 
