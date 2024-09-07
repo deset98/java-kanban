@@ -16,7 +16,6 @@ public class Main {
 
         TaskManager manager1 = Managers.getDefaultFileBackedTaskManager(new File("C:\\Users\\Deset\\" +
                 "java-dev-yandex-practicum\\java-kanban\\autosave1.csv"));
-//        TaskManager manager1 = Managers.getDefaultTaskManager();
 
         // ЗАДАЧА 1
         manager1.addTask(new Task("Name of task #1", "Description of Task #1", StatusOfTask.NEW,
@@ -68,11 +67,6 @@ public class Main {
         manager1.getSubtaskById(8);
         manager1.getSubtaskById(8);
         manager1.getTaskById(1);
-
-
-/*        manager1.clearSubtasks();
-        manager1.clearTasks();
-        manager1.clearEpics();*/
 
 
         System.out.println("\nПРИОРИТЕТНЫЙ СПИСОК:");
