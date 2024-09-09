@@ -1,8 +1,8 @@
-package taskmanager;
+package exceptions;
 
 public class ManagerSaveException extends Error {
 
-    ManagerSaveException(String message) {
+    public ManagerSaveException(String message) {
         super(message);
     }
 }
