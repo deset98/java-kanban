@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 
 public class Subtask extends Task {
     private int epicId;
-    private final TypeOfTask type = TypeOfTask.SUBTASK;
 
     public Subtask(int epicId,
                    String title,
@@ -17,6 +16,7 @@ public class Subtask extends Task {
                    Duration duration) {
         super(title, description, status, startTime, duration);
         this.epicId = epicId;
+        this.type = TypeOfTask.SUBTASK;
     }
 
     public Subtask(int epicId,
@@ -25,6 +25,7 @@ public class Subtask extends Task {
                    StatusOfTask status) {
         super(title, description, status);
         this.epicId = epicId;
+        this.type = TypeOfTask.SUBTASK;
     }
 
     public int getEpicId() {

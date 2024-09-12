@@ -7,4 +7,3 @@ id,type,name,status,description,epic,startTime,duration,endTime
 6,SUBTASK,Name of Subtask #2,NEW,Description of Subtask #2 for Epic # 3,3,07.10.2020 10:00,100,07.10.2020 11:40
 7,SUBTASK,Name of Subtask #3,DONE,Description of Subtask #1 for Epic # 4,4,06.10.2020 10:00,100,06.10.2020 11:40
 8,SUBTASK,Name of Subtask #5,DONE,Description of Subtask #4 for Epic # 3,3,16.10.2018 10:00,990,17.10.2018 02:30
-9,SUBTASK,Name of Subtask #6,DONE,Description of Subtask #5 for Epic # 4,4,startTime not set,---,endTime not set

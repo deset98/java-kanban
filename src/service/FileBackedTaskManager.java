@@ -102,7 +102,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         }
     }
 
-    private Task fromString(String string) {
+    public Task fromString(String string) {
         String[] split = string.split(",");
 
         TypeOfTask type = TypeOfTask.valueOf(split[1]);
