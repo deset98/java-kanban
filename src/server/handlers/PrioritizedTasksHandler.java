@@ -12,7 +12,6 @@ public class PrioritizedTasksHandler extends BaseHttpHandler {
         super(taskManager, gson);
     }
 
-    @Override
     public void handle(HttpExchange exchange) throws IOException {
         Endpoint endpoint = getEndpoint(exchange.getRequestURI().getPath(), exchange.getRequestMethod());
 

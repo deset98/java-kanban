@@ -19,11 +19,6 @@ public abstract class BaseHttpHandler implements HttpHandler {
         this.gson = gson;
     }
 
-    @Override
-    public void handle(HttpExchange exchange) throws IOException {
-
-    }
-
 
     protected void sendText(HttpExchange exchange, String text, int rCode) throws IOException {
         this.writeResponse(exchange, text, rCode);
@@ -39,6 +34,18 @@ public abstract class BaseHttpHandler implements HttpHandler {
 
     protected void sendInternalError(HttpExchange exchange) throws IOException {
         this.writeResponse(exchange, "Internal Server Error", 500);
+    }
+
+    private void writeResponse(HttpExchange exchange, String text, int rCode) throws IOException {
+
+        try (exchange) {
+            try (OutputStream os = exchange.getResponseBody()) {
+                exchange.getResponseHeaders().add("Content-Type", "application/json;charset=utf-8");
+                exchange.sendResponseHeaders(rCode, 0);
+                os.write(text.getBytes(StandardCharsets.UTF_8));
+            }
+        }
+
     }
 
     protected enum Endpoint {
@@ -63,17 +70,5 @@ public abstract class BaseHttpHandler implements HttpHandler {
         GET_PRIORITIZED_TASKS,
 
         UNKNOWN
-    }
-
-    private void writeResponse(HttpExchange exchange, String text, int rCode) throws IOException {
-
-        try (exchange) {
-            try (OutputStream os = exchange.getResponseBody()) {
-                exchange.getResponseHeaders().add("Content-Type", "application/json;charset=utf-8");
-                exchange.sendResponseHeaders(rCode, 0);
-                os.write(text.getBytes(StandardCharsets.UTF_8));
-            }
-        }
-
     }
 }
