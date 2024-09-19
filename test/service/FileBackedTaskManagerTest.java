@@ -28,7 +28,7 @@ public class FileBackedTaskManagerTest extends InMemoryTaskManagerTest {
 
         try {
             tempfile1 = File.createTempFile("file1", ".csv");
-            tempfile1 = File.createTempFile("file2", ".jpeg");
+            tempfile2 = File.createTempFile("file2", ".jpeg");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

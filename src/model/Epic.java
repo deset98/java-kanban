@@ -9,7 +9,6 @@ import java.util.List;
 
 public class Epic extends Task {
     private List<Subtask> epicSubtasks = new ArrayList<>();
-    private final TypeOfTask type = TypeOfTask.EPIC;
 
     private LocalDateTime endTime;
 
@@ -17,6 +16,7 @@ public class Epic extends Task {
                 String description,
                 StatusOfTask status) {
         super(title, description, status);
+        this.type = TypeOfTask.EPIC;
     }
 
 
